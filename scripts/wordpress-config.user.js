@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         WordPress Config Auto Modifier
-// @namespace    http://tampermonkey.net/
 // @version      1.0
-// @description  Tự động thay đổi nội dung input trên trang cài đặt nâng cao Flatsome
-// @author       Bạn
+// @description  Tự động thay đổi nội dung input trên trang cài đặt nâng cao cho WordPress và Flatsome Theme
+// @author       HungNth
 // @match        *://*/wp-admin*
+// @match        *://*/*/wp-admin*
 // @icon         https://www.google.com/s2/favicons?domain=wordpress.org
 // @grant        none
 // ==/UserScript==
