@@ -1,12 +1,12 @@
 // ==UserScript==
 // @name         WordPress Config Auto Modifier
-// @version      1.0
+// @version      1.0.1
 // @description  Tự động thay đổi nội dung input trên trang cài đặt nâng cao cho WordPress và Flatsome Theme
 // @author       HungNth
+// @homepage     https://github.com/HungNth/userscripts
 // @match        *://*/wp-admin*
 // @match        *://*/*/wp-admin*
 // @icon         https://www.google.com/s2/favicons?domain=wordpress.org
-// @grant        none
 // ==/UserScript==
 
 (function () {
@@ -119,11 +119,14 @@
     }
 
     if (window.location.href.indexOf("/wp-admin/options-permalink.php") > -1) {
+        const customSelectionRadio = document.querySelector('input[name="selection"][value="custom"]');
         const structure = document.querySelector('input[name="permalink_structure"]');
         const changeBtn = submitBtn('.submit');
 
         changeBtn.onclick = function (e) {
             e.preventDefault();
+
+            customSelectionRadio.checked = true;
             structure.value = "/%category%/%postname%/";
         }
     }
@@ -233,65 +236,6 @@
             signupLogin.checked = true;
             myAccountRegistration.checked = true;
         }
-    }
-
-    if (window.location.href.indexOf("/wp-admin/admin.php?page=slm_overview") > -1) {
-        // Tìm tất cả các hàng trong bảng
-        const tableRows = document.querySelectorAll('tbody#the-list tr');
-
-        tableRows.forEach(row => {
-            const licenseKeyCell = row.querySelector('td.license_key.column-license_key');
-            const itemReferenceCell = row.querySelector('td.item_reference.column-item_reference');
-
-            if (licenseKeyCell && itemReferenceCell) {
-                const licenseKey = licenseKeyCell.textContent.trim();
-                const itemReference = itemReferenceCell.textContent.trim();
-
-                // Tạo nút copy
-                const copyButton = document.createElement('button');
-                copyButton.innerHTML = '📋';
-                copyButton.title = 'Copy update URL';
-                copyButton.style.marginLeft = '10px';
-                copyButton.style.padding = '5px 8px';
-                copyButton.style.backgroundColor = '#0073aa';
-                copyButton.style.color = '#fff';
-                copyButton.style.border = 'none';
-                copyButton.style.borderRadius = '3px';
-                copyButton.style.cursor = 'pointer';
-                copyButton.style.fontSize = '12px';
-
-                // Tạo URL từ license key và item reference
-                const updateUrl = `https://update.wptop.net/wp-update-api?update_action=get_metadata&update_slug=${itemReference}&license_key=${licenseKey}`;
-
-                // Xử lý sự kiện click để copy URL
-                copyButton.onclick = function(e) {
-                    e.preventDefault();
-
-                    // Copy URL vào clipboard
-                    navigator.clipboard.writeText(updateUrl).then(() => {
-                        // Thay đổi nút tạm thời để báo thành công
-                        const originalText = copyButton.innerHTML;
-                        const originalColor = copyButton.style.backgroundColor;
-
-                        copyButton.innerHTML = '✓';
-                        copyButton.style.backgroundColor = '#46b450';
-
-                        setTimeout(() => {
-                            copyButton.innerHTML = originalText;
-                            copyButton.style.backgroundColor = originalColor;
-                        }, 1000);
-
-                        console.log('URL copied:', updateUrl);
-                    }).catch(err => {
-                        console.error('Failed to copy URL:', err);
-                        alert('Failed to copy URL to clipboard');
-                    });
-                };
-
-                // Thêm nút vào cột item reference
-                itemReferenceCell.appendChild(copyButton);
-            }
-        });
     }
 
 })();
