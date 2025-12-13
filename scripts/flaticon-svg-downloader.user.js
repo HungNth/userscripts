@@ -3,12 +3,10 @@
 // @version      1.1
 // @description  Download SVG icons from Flaticon.
 // @author       HungNth
-// @namespace    https://github.com/Hungnth/
+// @homepage     https://github.com/HungNth/userscripts
 // @match        *://www.flaticon.com/*
-// @grant        none
-// @license     MIT
-// @icon        https://www.flaticon.com/favicon.ico
-// @downloadURL none
+// @license      MIT
+// @icon         https://www.flaticon.com/favicon.ico
 // ==/UserScript==
 
 (function () {
